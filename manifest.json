@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Forest Flow",
+  "version": "1.0",
+  "description": "Social media usage reduction for adolescents.",
+  "permissions": ["activeTab", "storage", "tabs", "webNavigation", "history", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.facebook.com/*", "*://*.instagram.com/*", "*://*.tiktok.com/*", "*://*.twitter.com/*", "*://*.snapchat.com/*", "*://*.reddit.com/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "host_permissions": [
+    "*://*.facebook.com/*",
+    "*://*.instagram.com/*",
+    "*://*.tiktok.com/*",
+    "*://*.twitter.com/*",
+    "*://*.snapchat.com/*",
+    "*://*.reddit.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon" : "icon.png"
+  }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Timer</title>
+    <style>
+        #countdown {
+            font-size: 6em; 
+            font-family: 'Arial', sans-serif;
+        }
+        #notification {
+            font-size: 2em; 
+        }
+        #animated-image {
+            width: 100px; /* Adjust the size as needed */
+            height: auto;
+            display: block;
+            margin: 20px ; /* Center the image and add some space */
+            position: relative;
+            animation: moveAcross 20s linear infinite; /* Apply the animation */
+        }
+
+        @keyframes moveAcross {
+            0% {
+                left: 0;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Screen Timer</h1>
+    <button onclick="startTimer()">Start Timer</button>
+    <p id="countdown"></p>
+    <img id="animated-image" src="duck.png" alt="Animated Image">
+    <p id="notification"></p>
+
+    <script>
+        function screenTimer(durationSeconds) {
+            const startTime = new Date();
+            const endTime = new Date(startTime.getTime() + durationSeconds * 1000);
+
+            console.log(`Screen timer started at ${startTime.toLocaleTimeString()}`);
+            console.log(`Timer will end at ${endTime.toLocaleTimeString()}`);
+
+            const interval = setInterval(() => {
+                const currentTime = new Date();
+                const remainingTime = endTime - currentTime;
+                const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+                const formattedHours = String(hours).padStart(2, '0');
+                const formattedMinutes = String(minutes).padStart(2, '0');
+                const formattedSeconds = String(seconds).padStart(2, '0');
+
+                document.getElementById("countdown").innerText = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+
+                if (currentTime >= endTime) {
+                    clearInterval(interval);
+                    console.log("Time's up! Take a break.");
+                    showNotification();
+                    document.getElementById("notification").innerText = "Time's up! Take a break.";
+                    document.getElementById("countdown").innerText = "";
+                }
+            }, 1000);
+        }
+
+        function showNotification() {
+            if (Notification.permission === "granted") {
+                new Notification("Time's up! Take a break.");
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        new Notification("Time's up! Take a break.");
+                    }
+                });
+            }
+        }
+
+        function startTimer() {
+            const hours = parseInt(prompt("Enter the duration in hours: "), 10) || 0;
+            const minutes = parseInt(prompt("Enter the duration in minutes: "), 10) || 0;
+            const seconds = parseInt(prompt("Enter the duration in seconds: "), 10) || 0;
+            const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+            screenTimer(totalSeconds);
+        }
+
+        // Request notification permission on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (Notification.permission !== "granted") {
+                Notification.requestPermission();
+            }
+        });
+    </script>
+</body>
+</html>

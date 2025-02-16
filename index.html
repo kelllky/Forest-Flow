@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen Timer</title>
+</head>
+<body>
+    <h1>Screen Timer</h1>
+    <button onclick="startTimer()">Start Timer</button>
+    <p id="notification"></p>
+
+    <script>
+        function screenTimer(durationMinutes) {
+            const startTime = new Date();
+            const endTime = new Date(startTime.getTime() + durationMinutes * 60000);
+
+            console.log(`Screen timer started at ${startTime.toLocaleTimeString()}`);
+            console.log(`Timer will end at ${endTime.toLocaleTimeString()}`);
+
+            const interval = setInterval(() => {
+                const currentTime = new Date();
+                if (currentTime >= endTime) {
+                    clearInterval(interval);
+                    console.log("Time's up! Take a break.");
+                    showNotification();
+                    document.getElementById("notification").innerText = "Time's up! Take a break.";
+                }
+            }, 1000);
+        }
+
+        function showNotification() {
+            if (Notification.permission === "granted") {
+                new Notification("Time's up! Take a break.");
+            } else if (Notification.permission !== "denied") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        new Notification("Time's up! Take a break.");
+                    }
+                });
+            }
+        }
+
+        function startTimer() {
+            const duration = parseInt(prompt("Enter the duration in minutes: "), 10);
+            screenTimer(duration);
+        }
+
+        // Request notification permission on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (Notification.permission !== "granted") {
+                Notification.requestPermission();
+            }
+        });
+    </script>
+</body>
+</html>

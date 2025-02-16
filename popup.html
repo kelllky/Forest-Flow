@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Forest Flow</title>
+    <style>
+        html, body {
+            width:300px;
+            height:150px;
+        }
+    </style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body {background-image: url('BackgroundImage.png');
+    background-repeat: no-repeat;
+    
+ } /* Optional: scales the image to cover the entire body */
+
+    </style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #countdown {
+            font-size: 2em; 
+            font-weight: bold;
+            font-family: 'Press Start 2P', Courier, monospace; 
+            color: white;
+            margin-top: 20px;
+            position: relative;
+            top: 85px;  /* Adjust this value to move it further down */
+            /* margin-bottom: 100px; */
+            padding-right:60px;
+        }
+        #notification {
+            font-size: 1em; 
+            font-weight: bold;
+            color: rgb(5, 3, 3);
+            font-family: 'Press Start 2P', Courier, monospace;  /* Change the font */
+            position: relative;
+            margin-top: 20px;
+            top: -73px;
+            
+            padding-right:60px;
+        }
+        #animated-image {
+            width: 30px; 
+            height: 50px;
+            display: block;
+            margin: 20px;
+            position: relative;
+            top: -55px; 
+            animation: moveAcross 20s linear infinite; 
+        }
+        @keyframes moveAcross {
+            0% { left: 0; }
+            100% { left: 100%; }
+        }
+    </style>
+</head>
+
+<body>
+    <p id="countdown">05:00</p> <!-- Initially shows 5 minutes -->
+    <img id="animated-image" src="duck.png" alt="Animated Image">
+    <p id="notification"></p>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
